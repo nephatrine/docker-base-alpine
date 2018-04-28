@@ -1,7 +1,7 @@
 #!/usr/bin/with-contenv bash
 
 if [[ ! -d /mnt/config/etc/logrotate.d ]]; then
-  s6-setuidgid guardian mkdir -p /mnt/home/etc/logrotate.d
+  s6-setuidgid guardian mkdir -p /mnt/config/etc/logrotate.d
   s6-setuidgid guardian cp -n /etc/logrotate.d/* /mnt/config/etc/logrotate.d/
 fi
 
