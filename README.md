@@ -14,6 +14,7 @@ Runs logrotate as a cron job even though it is not the "S6 way" of doing things.
 
 - **PUID:** Volume Owner UID
 - **PGID:** Volume Owner GID
+- **TZ:** Time Zone
 
 ## Mount Points
 
