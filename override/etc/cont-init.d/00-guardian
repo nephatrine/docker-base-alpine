@@ -5,3 +5,7 @@ PGID=${PGID:-100}
 
 usermod -o -u "$PUID" guardian
 groupmod -o -g "$PGID" users
+
+if [[ ! -d /mnt/config/home/guardian ]]; then
+  s6-setuidgid guardian mkdir -p /mnt/config/home/guardian
+fi

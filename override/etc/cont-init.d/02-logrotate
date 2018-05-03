@@ -8,3 +8,7 @@ fi
 if [[ ! -f /mnt/config/etc/logrotate.conf ]]; then
   s6-setuidgid guardian cp /etc/logrotate.conf /mnt/config/etc/logrotate.conf
 fi
+
+if [[ ! -d /mnt/config/log ]]; then
+  s6-setuidgid guardian mkdir -p /mnt/config/log
+fi
