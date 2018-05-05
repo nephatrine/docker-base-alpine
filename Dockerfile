@@ -15,8 +15,10 @@ RUN echo "====== PREPARE BASIC UTILITIES ======" \
  && apk add logrotate \
  && sed -i 's/\/var\/log\/messages/#\/var\/log\/messages/g' /etc/logrotate.conf \
  && sed -i 's/include \/etc\/logrotate.d/include \/mnt\/config\/etc\/logrotate.d/g' /etc/logrotate.conf \
- && sed -i 's/^$_cpulimit/chown -R root \/mnt\/config\/etc\/logrotate.d\n$_cpulimit/g' /etc/periodic/daily/logrotate \
  && sed -i 's/\/etc\/logrotate.conf/-s \/mnt\/config\/log\/logrotate.status -v \/mnt\/config\/etc\/logrotate.conf/g' /etc/periodic/daily/logrotate \
+ && sed -i 's/^$_cpulimit/chown root \/mnt\/config\/etc\/logrotate.conf \/mnt\/config\/log\/logrotate.status\n$_cpulimit/g' /etc/periodic/daily/logrotate \
+ && sed -i 's/^$_cpulimit/chown -R root \/mnt\/config\/etc\/logrotate.d\n$_cpulimit/g' /etc/periodic/daily/logrotate \
+ && sed -i 's/^exit/chown guardian \/mnt\/config\/etc\/logrotate.conf \/mnt\/config\/log\/logrotate.status\nexit/g' /etc/periodic/daily/logrotate \
  && sed -i 's/^exit/chown -R guardian \/mnt\/config\/etc\/logrotate.d\nexit/g' /etc/periodic/daily/logrotate \
  \
  && echo "====== PREPARE GUARDIAN USER ======" \
