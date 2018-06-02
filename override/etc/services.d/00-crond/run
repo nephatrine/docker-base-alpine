@@ -1,0 +1,2 @@
+#!/usr/bin/with-contenv sh
+exec crond -L /mnt/config/log/crond.log -f;
