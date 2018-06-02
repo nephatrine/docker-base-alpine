@@ -1,0 +1,25 @@
+#!/bin/sh
+
+if [ -f /etc/conf.d/logrotate ]; then
+  . /etc/conf.d/logrotate
+fi
+
+if [ -x /usr/bin/cpulimit ] && [ -n "$CPULIMIT" ]; then
+  _cpulimit="/usr/bin/cpulimit --limit=$CPULIMIT"
+fi
+
+chown root /mnt/config/etc/logrotate.conf /mnt/config/log/logrotate.status
+chown -R root /mnt/config/etc/logrotate.d
+
+$_cpulimit /usr/sbin/logrotate -s /mnt/config/log/logrotate.status -v /mnt/config/etc/logrotate.conf
+EXITVALUE=$?
+
+if [ $EXITVALUE != 0 ]; then
+    /usr/bin/logger -t logrotate "ALERT exited abnormally with [$EXITVALUE]"
+fi
+
+chown guardian /mnt/config/etc/logrotate.conf /mnt/config/log/logrotate.status
+chown -R guardian /mnt/config/etc/logrotate.d
+chown -R guardian /mnt/config/log
+
+exit 0

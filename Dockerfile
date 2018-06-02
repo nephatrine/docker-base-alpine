@@ -4,30 +4,34 @@ LABEL maintainer="Daniel Wolf <nephatrine@gmail.com>"
 ENV \
  HOME="/root" \
  PS1="$(whoami)@$(hostname):$(pwd)$ " \
- S6_BEHAVIOUR_IF_STAGE2_FAILS=1
+ S6_BEHAVIOUR_IF_STAGE2_FAILS=1 \
+ S6_KILL_FINISH_MAXTIME=18000
 
-RUN echo "====== PREPARE BASIC UTILITIES ======" \
+RUN echo "====== RUNTIME CONFIGURATION ======" \
  && apk --update upgrade \
- && apk add bash ca-certificates coreutils file libressl tzdata \
- && mkdir -p /mnt/config /usr/src \
- \
- && echo "====== PREPARE LOGROTATE ======" \
- && apk add logrotate \
- && sed -i 's/\/var\/log\/messages/#\/var\/log\/messages/g' /etc/logrotate.conf \
- && sed -i 's/include \/etc\/logrotate.d/include \/mnt\/config\/etc\/logrotate.d/g' /etc/logrotate.conf \
- && sed -i 's/\/etc\/logrotate.conf/-s \/mnt\/config\/log\/logrotate.status -v \/mnt\/config\/etc\/logrotate.conf/g' /etc/periodic/daily/logrotate \
- && sed -i 's/^$_cpulimit/chown root \/mnt\/config\/etc\/logrotate.conf \/mnt\/config\/log\/logrotate.status\n$_cpulimit/g' /etc/periodic/daily/logrotate \
- && sed -i 's/^$_cpulimit/chown -R root \/mnt\/config\/etc\/logrotate.d\n$_cpulimit/g' /etc/periodic/daily/logrotate \
- && sed -i 's/^exit/chown guardian \/mnt\/config\/etc\/logrotate.conf \/mnt\/config\/log\/logrotate.status\nexit/g' /etc/periodic/daily/logrotate \
- && sed -i 's/^exit/chown -R guardian \/mnt\/config\/etc\/logrotate.d\nexit/g' /etc/periodic/daily/logrotate \
- \
- && echo "====== PREPARE GUARDIAN USER ======" \
- && apk add shadow \
- && useradd -u 1000 -U -d /mnt/config/home/guardian -s /sbin/nologin guardian \
+ && apk add \
+  bash \
+  ca-certificates \
+  coreutils \
+  file \
+  libressl \
+  logrotate \
+  shadow \
+  tzdata \
+ && mkdir -p /mnt/config \
+ && rm /etc/logrotate.d/acpid \
+ && useradd -u 1000 -U -d /mnt/config/home -s /sbin/nologin guardian \
  && usermod -g users guardian \
  \
- && echo "====== PREPARE BUILD TOOLS ======" \
- && apk add --virtual .build-s6 gcc git libc-dev libressl-dev linux-headers make \
+ && echo "====== BUILD CONFIGURATION ======" \
+ && apk add --virtual .build-s6 \
+  gcc \
+  git \
+  libc-dev \
+  libressl-dev \
+  linux-headers \
+  make \
+ && mkdir -p /usr/src \
  \
  && echo "====== COMPILE SKALIBS ======" \
  && cd /usr/src \
