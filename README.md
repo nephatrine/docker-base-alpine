@@ -11,11 +11,16 @@ This is not intended to be used directly. It is intended to be used as a base im
 - [S6](https://skarnet.org/software/)
 - [S6-Overlay](https://github.com/just-containers/s6-overlay)
 
+## Configuration
+
+- ``{config}/etc/logrotate.d/*``: Logrotate Per-Application Configuration
+- ``{config}/etc/logrotate.conf``: Logrotate General Configuration
+
 ## Ports
 
 No ports exposed.
 
-## Settings
+## Variables
 
 - **PUID:** Volume Owner UID
 - **PGID:** Volume Owner GID
@@ -23,4 +28,4 @@ No ports exposed.
 
 ## Volumes
 
-- **/mnt/config:** Configuration Volume
+- **/mnt/config:** Configuration/Logs
