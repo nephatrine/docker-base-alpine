@@ -1,7 +1,6 @@
-[Gitea](https://code.nephatrine.net/nephatrine/docker-base-alpine) |
-[GitHub](https://github.com/nephatrine/docker-base-alpine) |
+[Git Repo](https://code.nephatrine.net/nephatrine/docker-base-alpine) |
 [DockerHub](https://hub.docker.com/r/nephatrine/base-alpine/) |
-[unRAID](https://github.com/nephatrine/unraid-docker-templates)
+[unRAID Template](https://github.com/nephatrine/unraid-docker-templates)
 
 # Alpine+S6 Base Container
 
