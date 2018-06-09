@@ -12,8 +12,9 @@ This is not intended to be used directly. It is intended to be used as a base im
 
 ## Configuration
 
-- ``{config}/etc/logrotate.d/*``: Logrotate Per-Application Configuration
+- ``{config}/etc/crontab``: Crontab Entries
 - ``{config}/etc/logrotate.conf``: Logrotate General Configuration
+- ``{config}/etc/logrotate.d/*``: Logrotate Application Configuration
 
 ## Ports
 
