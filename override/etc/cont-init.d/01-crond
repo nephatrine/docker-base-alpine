@@ -12,7 +12,4 @@ if [[ ! -f /mnt/config/etc/crontab ]]; then
     echo '' | s6-setuidgid guardian tee -a /mnt/config/etc/crontab >/dev/null
     cat /etc/crontab.custom | s6-setuidgid guardian tee -a /mnt/config/etc/crontab >/dev/null
   fi
-else
-  cp /mnt/config/etc/crontab /etc/crontabs/root
-  chmod 600 /etc/crontabs/root
 fi

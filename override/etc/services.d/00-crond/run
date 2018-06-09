@@ -1,2 +1,6 @@
 #!/usr/bin/with-contenv sh
+if [ -f /mnt/config/etc/crontab ]; then
+  cp /mnt/config/etc/crontab /etc/crontabs/root
+  chmod 600 /etc/crontabs/root
+fi
 exec crond -L /mnt/config/log/crond.log -f;
