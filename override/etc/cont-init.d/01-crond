@@ -4,12 +4,16 @@ if [[ ! -f /mnt/config/etc/crontab ]]; then
   if [[ ! -d /mnt/config/etc ]]; then
     s6-setuidgid guardian mkdir -p /mnt/config/etc
   fi
-  echo '# NOTE: THIS IS THE ROOT CRONTAB - USE "s6-setuidgid guardian" TO ENSURE PROPER' | s6-setuidgid guardian tee /mnt/config/etc/crontab >/dev/null
-  echo '#       PERMISSIONS WHEN INTERACTING WITH USER VOLUMES.' | s6-setuidgid guardian tee -a /mnt/config/etc/crontab >/dev/null
-  echo '' | s6-setuidgid guardian tee -a /mnt/config/etc/crontab >/dev/null
-  cat /etc/crontabs/root | s6-setuidgid guardian tee -a /mnt/config/etc/crontab >/dev/null
-  if [[ -f /etc/crontab.custom ]]; then
+  if grep -q 's6-setuidgid guardian' /etc/crontabs/root; then
+    cat /etc/crontabs/root | s6-setuidgid guardian tee -a /mnt/config/etc/crontab >/dev/null
+  else
+    echo '# NOTE: THIS IS THE ROOT CRONTAB - USE "s6-setuidgid guardian" TO ENSURE PROPER' | s6-setuidgid guardian tee /mnt/config/etc/crontab >/dev/null
+    echo '#       PERMISSIONS WHEN INTERACTING WITH USER VOLUMES.' | s6-setuidgid guardian tee -a /mnt/config/etc/crontab >/dev/null
     echo '' | s6-setuidgid guardian tee -a /mnt/config/etc/crontab >/dev/null
-    cat /etc/crontab.custom | s6-setuidgid guardian tee -a /mnt/config/etc/crontab >/dev/null
+    cat /etc/crontabs/root | s6-setuidgid guardian tee -a /mnt/config/etc/crontab >/dev/null
+    if [[ -f /etc/crontab.custom ]]; then
+      echo '' | s6-setuidgid guardian tee -a /mnt/config/etc/crontab >/dev/null
+      cat /etc/crontab.custom | s6-setuidgid guardian tee -a /mnt/config/etc/crontab >/dev/null
+    fi
   fi
 fi
