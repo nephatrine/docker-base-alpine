@@ -1,0 +1,10 @@
+#!/bin/sh
+
+if [ -f /mnt/config/etc/crontab ]; then
+  if ! diff /etc/crontabs/root /mnt/config/etc/crontab >/dev/null; then
+    cp /mnt/config/etc/crontab /etc/crontabs/root
+    chmod 600 /etc/crontabs/root
+  fi
+fi
+
+exit 0
