@@ -22,9 +22,9 @@ No ports exposed.
 
 ## Variables
 
-- **PUID:** Volume Owner UID
-- **PGID:** Volume Owner GID
-- **TZ:** Time Zone
+- **PUID:** Owner UID (*1000*)
+- **PGID:** Owner GID (*100*)
+- **TZ:** Time Zone (*"America/New_York"*)
 
 ## Volumes
 
