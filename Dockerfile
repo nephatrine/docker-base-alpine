@@ -1,4 +1,4 @@
-FROM alpine:edge
+FROM alpine:v3.8
 LABEL maintainer="Daniel Wolf <nephatrine@gmail.com>"
 
 ENV \
